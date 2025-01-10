@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Shoe Customizer</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/loaders/GLTFLoader.js"></script>
+</head>
+<body>
+
+<div id="shoeCustomizer" style="width: 100%; height: 500px;"></div>
+
+<script>
+// Initialize Three.js scene
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer();
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.getElementById('shoeCustomizer').appendChild(renderer.domElement);
+
+// Load the 3D model (Replace with the link to your uploaded model)
+const loader = new THREE.GLTFLoader();
+let shoeModel;
+loader.load('https://github.com/your-username/your-repository-name/raw/main/model.glb', function (gltf) {
+    shoeModel = gltf.scene;
+    scene.add(shoeModel);
+    shoeModel.scale.set(0.5, 0.5, 0.5); // Resize model as needed
+    console.log('Model loaded successfully!');
+}, undefined, function (error) {
+    console.error('Error loading model:', error);
+});
+
+// Set camera position
+camera.position.z = 3;
+
+// Render the scene
+function animate() {
+    requestAnimationFrame(animate);
+    if (shoeModel) {
+        shoeModel.rotation.x += 0.01;
+        shoeModel.rotation.y += 0.01;
+    }
+    renderer.render(scene, camera);
+}
+animate();
+</script>
+
+</body>
+</html>
